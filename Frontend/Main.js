@@ -4,7 +4,7 @@ Moralis.serverURL = 'https://rowkubhlshxr.moralis.io:2053/server'
 init = async () => {
     window.web3 = await Moralis.web3.enable();
     initUer();
-} 
+}
 
 initUser = async() => {
     if (await Moralis.User.current()){
@@ -14,4 +14,12 @@ initUser = async() => {
         showElement(userConnectButton);
         hideElement(userProfileButton);
     }
+}
+
+login = async () => {
+  try{
+    await Moralis.webs.autoenticate();
+  } catch (error){
+    
+  }
 }
