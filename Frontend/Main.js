@@ -1,4 +1,5 @@
 Moralis.initialize("irF5RmoJtDU4e23DsV0QYLyMBoSwBJC6UHwRc1zR");
+
 Moralis.serverURL = 'https://rowkubhlshxr.moralis.io:2053/server'
 const TOKEN_CONTRACT_ADDRESS = "0xa13f135eed8B734DE667339cB73E033F34428132";
 
@@ -25,6 +26,6 @@ login = async () => {
   try{
     await Moralis.webs.autoenticate();
   } catch (error){
-    
+
   }
 }
