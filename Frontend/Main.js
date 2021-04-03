@@ -1,9 +1,14 @@
 Moralis.initialize("irF5RmoJtDU4e23DsV0QYLyMBoSwBJC6UHwRc1zR");
 Moralis.serverURL = 'https://rowkubhlshxr.moralis.io:2053/server'
+const TOKEN_CONTRACT_ADDRESS = "0xa13f135eed8B734DE667339cB73E033F34428132";
 
 init = async () => {
-    window.web3 = await Moralis.web3.enable();
-    initUer();
+    hideElement(userItemsSection);
+    hideElement(userInfo);
+    hideElement(createItemForm);
+    window.web3 = await Moralis.Web3.enable();
+    window.tokenContract = new web3.eth.Contract(tokenContractAbi, TOKEN_CONTRACT_ADDRESS);
+    initUser();
 }
 
 initUser = async() => {
