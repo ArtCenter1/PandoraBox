@@ -28,10 +28,10 @@ initUser = async() => {
 }
 // metaMask login
 login = async () => {
-  try{
-    await Moralis.Web3.authenticate();
-    initUser();
-  } catch (error){
+  try {
+      await Moralis.Web3.authenticate();
+      initUser();
+  } catch (error) {
       alert(error)
   }
 }
