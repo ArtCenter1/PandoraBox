@@ -43,6 +43,6 @@ showElement = (element) => element.style.display ="block";
 const userConnectButton = document.getElementById("btnConnect");
 userConnectButton.onclick = login;
 
-const userProfileButton = document.getElementById("btnProfile");
+const userProfileButton = document.getElementById("btnUserInfo");
 
 init();
