@@ -32,7 +32,7 @@ login = async () => {
       await Moralis.Web3.authenticate();
       initUser();
   } catch (error) {
-      alert(error)
+      alert(error);
   }
 }
 
