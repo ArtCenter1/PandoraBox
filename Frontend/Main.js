@@ -11,7 +11,7 @@ init = async () => {
     //window.tokenContract = new web3.eth.Contract(tokenContractAbi, TOKEN_CONTRACT_ADDRESS);
     initUser();
 }
-
+//check if user connected
 initUser = async() => {
     if (await Moralis.User.current()){
       hideElement(userConnectButton);
@@ -26,7 +26,7 @@ initUser = async() => {
       //hideElement(openUserItemsButton);
     }
 }
-
+// metaMask login
 login = async () => {
   try{
     await Moralis.webs.autoenticate();
@@ -41,3 +41,8 @@ hideElement = (element) => element.style.display ="none";
 showElement = (element) => element.style.display ="block";
 
 const userConnectButton = document.getElementById("btnConnect");
+userConnectButton.onclick = login;
+
+const userProfileButton = document.getElementById("btnProfile");
+
+init();
