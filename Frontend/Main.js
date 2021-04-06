@@ -12,7 +12,7 @@ init = async () => {
     initUser();
 }
 //check if user connected
-initUser = async() => {
+initUser = async () => {
     if (await Moralis.User.current()){
       hideElement(userConnectButton);
       showElement(userProfileButton);
