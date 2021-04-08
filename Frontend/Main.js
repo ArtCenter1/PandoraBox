@@ -84,6 +84,16 @@ saveUserInfo = async () => {
   openUserInfo();
 }
 
+createItem = async () => {
+
+  if (createItemFile.files.length == 0){
+      alert("Please select a file!");
+      return;
+  } else if (createItemNameField.value.length == 0){
+      alert("Please give the item a name!");
+      return;
+  }
+
 
 hideElement = (element) => element.style.display ="none";
 showElement = (element) => element.style.display ="block";
