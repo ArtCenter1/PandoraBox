@@ -94,7 +94,16 @@ createItem = async () => {
       return;
   }
 
+  const nftFile = new Moralis.File("nftFile.jpg",createItemFile.files[0]);
+  await nftFile.saveIPFS();
 
+  const nftFilePath = nftFile.ipfs();
+
+  const metadata = {
+      name: createItemNameField.value,
+      description: createItemDescriptionField.value,
+      image: nftFilePath,
+  };
 hideElement = (element) => element.style.display ="none";
 showElement = (element) => element.style.display ="block";
 
