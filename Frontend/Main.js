@@ -85,7 +85,6 @@ saveUserInfo = async () => {
 }
 
 createItem = async () => {
-
   if (createItemFile.files.length == 0){
       alert("Please select a file!");
       return;
@@ -98,12 +97,24 @@ createItem = async () => {
   await nftFile.saveIPFS();
 
   const nftFilePath = nftFile.ipfs();
+  //const nftFileHash = nftFile.hash();
 
   const metadata = {
       name: createItemNameField.value,
       description: createItemDescriptionField.value,
-      image: nftFilePath,
+      //nftFilePath: nftFilePath,
+      image: nftFileHash
   };
+
+  const nftFileMetadataFile = new Moralis.File("metadata.json", {base64 : btoa(JSON.stringify(metadata))});
+  await nftFileMetadataFile.saveIPFS();
+
+  const nftFileMetadataFilePath = nftFileMetadataFile.ipfs();
+  const nftFileMetadataFileHash = nftFileMetadataFile.Hash();
+
+  
+
+}
 hideElement = (element) => element.style.display ="none";
 showElement = (element) => element.style.display ="block";
 
