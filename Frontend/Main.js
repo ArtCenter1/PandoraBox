@@ -97,7 +97,7 @@ createItem = async () => {
   await nftFile.saveIPFS();
 
   const nftFilePath = nftFile.ipfs();
-  //const nftFileHash = nftFile.hash();
+  
 
   const metadata = {
       name: createItemNameField.value,
@@ -110,7 +110,7 @@ createItem = async () => {
   await nftFileMetadataFile.saveIPFS();
 
   const nftFileMetadataFilePath = nftFileMetadataFile.ipfs();
-  const nftFileMetadataFileHash = nftFileMetadataFile.Hash();
+  
 
   
 
