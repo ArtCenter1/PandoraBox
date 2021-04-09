@@ -13,18 +13,18 @@ init = async () => {
 }
 //check if user connected
 initUser = async () => {
-    if (await Moralis.User.current()){
+  if (await Moralis.User.current()){
       hideElement(userConnectButton);
       showElement(userProfileButton);
       showElement(openCreateItemButton);
       showElement(openUserItemsButton);
       loadUserItems();
-    }else{
+  }else{
       showElement(userConnectButton);
       hideElement(userProfileButton);
       hideElement(openCreateItemButton);
       hideElement(openUserItemsButton);
-    }
+  }
 }
 
 // metaMask login
