@@ -1,5 +1,5 @@
-Moralis.initialize("irF5RmoJtDU4e23DsV0QYLyMBoSwBJC6UHwRc1zR");
-Moralis.serverURL = 'https://rowkubhlshxr.moralis.io:2053/server'
+Moralis.initialize("yBxYplC8joyNCG5aJ2UbNdIy4m99ihNADphW5Y6O");
+Moralis.serverURL = 'https://zprkibcakpjx.moralis.io:2053/server'
 //const TOKEN_CONTRACT_ADDRESS = "0xa13f135eed8B734DE667339cB73E033F34428132";
 
 //enable Moralis web3 service
@@ -115,8 +115,9 @@ createItem = async () => {
   
 
 }
-hideElement = (element) => element.style.display ="none";
-showElement = (element) => element.style.display ="block";
+
+hideElement = (element) => element.style.display = "none";
+showElement = (element) => element.style.display = "block";
 
 // Navbar
 const userConnectButton = document.getElementById("btnConnect");
@@ -146,5 +147,12 @@ const createItemStatusField = document.getElementById("selectCreateItemStatus");
 const createItemFile = document.getElementById("fileCreateItemFile");
 document.getElementById("btnCloseCreateItem").onclick = () => hideElement(createItemForm);
 document.getElementById("btnCreateItem").onclick = createItem;
+
+// User items
+const userItemsSection = document.getElementById("userItems");
+const userItems = document.getElementById("userItemsList");
+document.getElementById("btnCloseUserItems").onclick = () => hideElement(userItemsSection);
+const openUserItemsButton = document.getElementById("btnMyItems");
+openUserItemsButton.onclick = openUserItems;
 
 init();
