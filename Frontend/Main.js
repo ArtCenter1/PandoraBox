@@ -4,9 +4,9 @@ Moralis.serverURL = 'https://rowkubhlshxr.moralis.io:2053/server'
 
 //enable Moralis web3 service
 init = async () => {
-    //hideElement(userItemsSection);
+    hideElement(userItemsSection);
     hideElement(userInfo);
-    //hideElement(createItemForm);
+    hideElement(createItemForm);
     window.web3 = await Moralis.Web3.enable();
     //window.tokenContract = new web3.eth.Contract(tokenContractAbi, TOKEN_CONTRACT_ADDRESS);
     initUser();
@@ -16,14 +16,14 @@ initUser = async () => {
     if (await Moralis.User.current()){
       hideElement(userConnectButton);
       showElement(userProfileButton);
-      //showElement(openCreateItemButton);
-      //showElement(openUserItemsButton);
-      //loadUserItems();
+      showElement(openCreateItemButton);
+      showElement(openUserItemsButton);
+      loadUserItems();
     }else{
       showElement(userConnectButton);
       hideElement(userProfileButton);
-      //hideElement(openCreateItemButton);
-      //hideElement(openUserItemsButton);
+      hideElement(openCreateItemButton);
+      hideElement(openUserItemsButton);
     }
 }
 
@@ -84,7 +84,37 @@ saveUserInfo = async () => {
   openUserInfo();
 }
 
+createItem = async () => {
+  if (createItemFile.files.length == 0){
+      alert("Please select a file!");
+      return;
+  } else if (createItemNameField.value.length == 0){
+      alert("Please give the item a name!");
+      return;
+  }
 
+  const nftFile = new Moralis.File("nftFile.jpg",createItemFile.files[0]);
+  await nftFile.saveIPFS();
+
+  const nftFilePath = nftFile.ipfs();
+  
+
+  const metadata = {
+      name: createItemNameField.value,
+      description: createItemDescriptionField.value,
+      //nftFilePath: nftFilePath,
+      image: nftFileHash
+  };
+
+  const nftFileMetadataFile = new Moralis.File("metadata.json", {base64 : btoa(JSON.stringify(metadata))});
+  await nftFileMetadataFile.saveIPFS();
+
+  const nftFileMetadataFilePath = nftFileMetadataFile.ipfs();
+  
+
+  
+
+}
 hideElement = (element) => element.style.display ="none";
 showElement = (element) => element.style.display ="block";
 
@@ -105,5 +135,16 @@ const userAvatarFile = document.getElementById("fileAvatar");
 document.getElementById("btnCloseUserInfo").onclick = () => hideElement(userInfo);
 document.getElementById("btnLogout").onclick = logout;
 document.getElementById("btnSaveUserInfo").onclick = saveUserInfo;
+
+// Item creation
+const createItemForm = document.getElementById("createItem");
+
+const createItemNameField = document.getElementById("txtCreateItemName");
+const createItemDescriptionField = document.getElementById("txtCreateItemDescription");
+const createItemPriceField = document.getElementById("numCreateItemPrice");
+const createItemStatusField = document.getElementById("selectCreateItemStatus");
+const createItemFile = document.getElementById("fileCreateItemFile");
+document.getElementById("btnCloseCreateItem").onclick = () => hideElement(createItemForm);
+document.getElementById("btnCreateItem").onclick = createItem;
 
 init();
