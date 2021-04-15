@@ -9,7 +9,9 @@ init = async () => {
     hideElement(createItemForm);
     window.web3 = await Moralis.Web3.enable();
     window.tokenContract = new web3.eth.Contract(tokenContractAbi, TOKEN_CONTRACT_ADDRESS);
+    
     initUser();
+    loadItems();
 }
 //check if user connected
 initUser = async () => {
@@ -18,7 +20,6 @@ initUser = async () => {
         showElement(userProfileButton);
         showElement(openCreateItemButton);
         showElement(openUserItemsButton);
-        loadUserItems();
     } else {
         showElement(userConnectButton);
         hideElement(userProfileButton);
@@ -119,6 +120,20 @@ mintNft = async (metadataUrl) => {
     const receipt = await tokenContract.methods.createItem(metadataUrl).send({from: ethereum.selectedAddress});
     console.log(receipt);
     return receipt.events.Transfer.returnValues.tokenId;
+}
+
+openUserItems = async () => {
+    user = await Moralis.User.current();
+    if (user){    
+        showElement(userItemsSection);
+    }else{
+        login();
+    }
+}
+
+loadUserItems = async () => {
+    const ownedItems = await Moralis.Cloud.run("getUserItems");
+    console.log(ownedItems);
 }
 
 hideElement = (element) => element.style.display = "none";
