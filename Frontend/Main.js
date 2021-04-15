@@ -19,6 +19,7 @@ initUser = async () => {
         showElement(userProfileButton);
         showElement(openCreateItemButton);
         showElement(openUserItemsButton);
+        loadUserItems();
     } else {
         showElement(userConnectButton);
         hideElement(userProfileButton);
@@ -85,33 +86,32 @@ saveUserInfo = async () => {
 }
 
 createItem = async () => {
-    if (createItemFile.files.length == 0) {
+
+    if (createItemFile.files.length == 0){
         alert("Please select a file!");
         return;
-    } else if (createItemNameField.value.length == 0) {
+    } else if (createItemNameField.value.length == 0){
         alert("Please give the item a name!");
         return;
     }
 
-    const nftFile = new Moralis.File("nftFile.jpg", createItemFile.files[0]);
+    const nftFile = new Moralis.File("nftFile.jpg",createItemFile.files[0]);
     await nftFile.saveIPFS();
 
     const nftFilePath = nftFile.ipfs();
-    const nftFilehash = nftFile.hash();
 
     const metadata = {
         name: createItemNameField.value,
         description: createItemDescriptionField.value,
-        image: nftFilePath,  
+        image: nftFilePath,
     };
 
     const nftFileMetadataFile = new Moralis.File("metadata.json", { base64: btoa(JSON.stringify(metadata)) });
     await nftFileMetadataFile.saveIPFS();
 
     const nftFileMetadataFilePath = nftFileMetadataFile.ipfs();
-    //const nftFileMetadataFileHash = nftFileMetadataFile.hash();
-    const nftId = await mintNft(nftFileMetadataFilePath);
 
+    const nftId = await mintNft(nftFileMetadataFilePath);
 
 }
 
@@ -145,6 +145,9 @@ userConnectButton.onclick = login;
 const userProfileButton = document.getElementById("btnUserInfo");
 userProfileButton.onclick = openUserInfo;
 
+const openCreateItemButton = document.getElementById("btnOpenCreateItem");
+openCreateItemButton.onclick = () => showElement(createItemForm);
+
 //  User profile
 const userInfo = document.getElementById("userInfo");
 const userUsernameField = document.getElementById("txtUsername");
@@ -156,15 +159,9 @@ document.getElementById("btnCloseUserInfo").onclick = () => hideElement(userInfo
 document.getElementById("btnLogout").onclick = logout;
 document.getElementById("btnSaveUserInfo").onclick = saveUserInfo;
 
-const CreateItemForm = document.getElementById("CreateItem");
-const CreateItemNameField = document.getElementById("txtCreateItemName");
-const CreateItemDescriptionField = document.getElementById("txtCreateItemDescription");
-const CreateItemPrice = document.getElementById("numCreateItemPrice");
-const CreateItemStatus = document.getElementById("selectCreateItemStatus");
-const CreateItemFile = document.getElementById("fileCreateItemFile");
 
-const OpenCreateItemButton = document.getElementById("btnsOpenCreateItem");
-OpenCreateItemButton.onclick = () => showElement(CreateItemForm);
+
+
 document.getElementById("btnCreateItem").onclick = () => hideElement(CreateItemForm);
 
 // Item creation
