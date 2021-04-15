@@ -9,7 +9,6 @@ init = async () => {
     hideElement(createItemForm);
     window.web3 = await Moralis.Web3.enable();
     window.tokenContract = new web3.eth.Contract(tokenContractAbi, TOKEN_CONTRACT_ADDRESS);
-    
     initUser();
     loadItems();
 }
@@ -156,6 +155,17 @@ const userAvatarFile = document.getElementById("fileAvatar");
 document.getElementById("btnCloseUserInfo").onclick = () => hideElement(userInfo);
 document.getElementById("btnLogout").onclick = logout;
 document.getElementById("btnSaveUserInfo").onclick = saveUserInfo;
+
+const CreateItemForm = document.getElementById("CreateItem");
+const CreateItemNameField = document.getElementById("txtCreateItemName");
+const CreateItemDescriptionField = document.getElementById("txtCreateItemDescription");
+const CreateItemPrice = document.getElementById("numCreateItemPrice");
+const CreateItemStatus = document.getElementById("selectCreateItemStatus");
+const CreateItemFile = document.getElementById("fileCreateItemFile");
+
+const OpenCreateItemButton = document.getElementById("btnsOpenCreateItem");
+OpenCreateItemButton.onclick = () => showElement(CreateItemForm);
+document.getElementById("btnCreateItem").onclick = () => hideElement(CreateItemForm);
 
 // Item creation
 const createItemForm = document.getElementById("createItem");
