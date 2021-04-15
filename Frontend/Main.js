@@ -13,106 +13,105 @@ init = async () => {
 }
 //check if user connected
 initUser = async () => {
-  if (await Moralis.User.current()){
-      hideElement(userConnectButton);
-      showElement(userProfileButton);
-      showElement(openCreateItemButton);
-      showElement(openUserItemsButton);
-      loadUserItems();
-  }else{
-      showElement(userConnectButton);
-      hideElement(userProfileButton);
-      hideElement(openCreateItemButton);
-      hideElement(openUserItemsButton);
-  }
+    if (await Moralis.User.current()) {
+        hideElement(userConnectButton);
+        showElement(userProfileButton);
+        showElement(openCreateItemButton);
+        showElement(openUserItemsButton);
+        loadUserItems();
+    } else {
+        showElement(userConnectButton);
+        hideElement(userProfileButton);
+        hideElement(openCreateItemButton);
+        hideElement(openUserItemsButton);
+    }
 }
 
 // metaMask login
 login = async () => {
-  try {
-      await Moralis.Web3.authenticate();
-      initUser();
-  } catch (error) {
-      alert(error)
-  }
+    try {
+        await Moralis.Web3.authenticate();
+        initUser();
+    } catch (error) {
+        alert(error)
+    }
 }
 
 logout = async () => {
-  await Moralis.User.logOut();
-  hideElement(userInfo);
-  initUser();
+    await Moralis.User.logOut();
+    hideElement(userInfo);
+    initUser();
 }
 
 openUserInfo = async () => {
-  user = await Moralis.User.current();
-  if (user){    
-      const email = user.get('email');
-      if(email){
-          userEmailField.value = email;
-      }else{
-          userEmailField.value = "";
-      }
+    user = await Moralis.User.current();
+    if (user) {
+        const email = user.get('email');
+        if (email) {
+            userEmailField.value = email;
+        } else {
+            userEmailField.value = "";
+        }
 
-      userUsernameField.value = user.get('username');
+        userUsernameField.value = user.get('username');
 
-      const userAvatar = user.get('avatar');
-      if(userAvatar){
-          userAvatarImg.src = userAvatar.url();
-          showElement(userAvatarImg);
-      }else{
-          hideElement(userAvatarImg);
-      }
+        const userAvatar = user.get('avatar');
+        if (userAvatar) {
+            userAvatarImg.src = userAvatar.url();
+            showElement(userAvatarImg);
+        } else {
+            hideElement(userAvatarImg);
+        }
 
-      showElement(userInfo);
-  }else{
-      login();
-  }
+        showElement(userInfo);
+    } else {
+        login();
+    }
 }
 
 saveUserInfo = async () => {
-  user.set('email', userEmailField.value);
-  user.set('username', userUsernameField.value);
-  //still need to handle duplicate username from users here
+    user.set('email', userEmailField.value);
+    user.set('username', userUsernameField.value);
+    //still need to handle duplicate username from users here
 
-  if (userAvatarFile.files.length > 0) {
-      const avatar = new Moralis.File("avatar.jpg", userAvatarFile.files[0]);
-      user.set('avatar', avatar);
-  }
+    if (userAvatarFile.files.length > 0) {
+        const avatar = new Moralis.File("avatar.jpg", userAvatarFile.files[0]);
+        user.set('avatar', avatar);
+    }
 
-  await user.save();
-  alert("User info saved successfully!");
-  openUserInfo();
+    await user.save();
+    alert("User info saved successfully!");
+    openUserInfo();
 }
 
 createItem = async () => {
-  if (createItemFile.files.length == 0){
-      alert("Please select a file!");
-      return;
-  } else if (createItemNameField.value.length == 0){
-      alert("Please give the item a name!");
-      return;
-  }
+    if (createItemFile.files.length == 0) {
+        alert("Please select a file!");
+        return;
+    } else if (createItemNameField.value.length == 0) {
+        alert("Please give the item a name!");
+        return;
+    }
 
-  const nftFile = new Moralis.File("nftFile.jpg",createItemFile.files[0]);
-  await nftFile.saveIPFS();
+    const nftFile = new Moralis.File("nftFile.jpg", createItemFile.files[0]);
+    await nftFile.saveIPFS();
 
-  const nftFilePath = nftFile.ipfs();
-  
+    const nftFilePath = nftFile.ipfs();
+    const nftFilehash = nftFile.hash();
 
-  const metadata = {
-      name: createItemNameField.value,
-      description: createItemDescriptionField.value,
-      //nftFilePath: nftFilePath,
-      image: nftFileHash
-  };
+    const metadata = {
+        name: createItemNameField.value,
+        description: createItemDescriptionField.value,
+        nftFilePath: nftFilePath,
+        //nftFileHash: nftFileHash
+    };
 
-  const nftFileMetadataFile = new Moralis.File("metadata.json", {base64 : btoa(JSON.stringify(metadata))});
-  await nftFileMetadataFile.saveIPFS();
+    const nftFileMetadataFile = new Moralis.File("metadata.json", { base64: btoa(JSON.stringify(metadata)) });
+    await nftFileMetadataFile.saveIPFS();
 
-  const nftFileMetadataFilePath = nftFileMetadataFile.ipfs();
-  
+    const nftFileMetadataFilePath = nftFileMetadataFile.ipfs();
+    //const nftFileMetadataFileHash = nftFileMetadataFile.hash();
 
-  
 
 }
 
