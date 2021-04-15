@@ -1,6 +1,6 @@
 Moralis.initialize("yBxYplC8joyNCG5aJ2UbNdIy4m99ihNADphW5Y6O");
 Moralis.serverURL = 'https://zprkibcakpjx.moralis.io:2053/server'
-//const TOKEN_CONTRACT_ADDRESS = "0xa13f135eed8B734DE667339cB73E033F34428132";
+const TOKEN_CONTRACT_ADDRESS = "0xBA4cf0b9539160413f921933707B03a53a0a7ad2";
 
 //enable Moralis web3 service
 init = async () => {
