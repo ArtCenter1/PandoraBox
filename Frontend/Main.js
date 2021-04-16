@@ -113,6 +113,9 @@ createItem = async () => {
 
     const nftId = await mintNft(nftFileMetadataFilePath);
 
+    user = await Moralis.User.current();
+    const userAddress = user.get('ethAddress');
+
 }
 
 mintNft = async (metadataUrl) => {
@@ -132,7 +135,59 @@ openUserItems = async () => {
 
 loadUserItems = async () => {
     const ownedItems = await Moralis.Cloud.run("getUserItems");
-    console.log(ownedItems);
+    ownedItems.forEach(item => {
+        const userItemListing = document.getElementById(`user-item-${item.tokenObjectId}`);
+        if (userItemListing) return;
+        getAndRenderItemData(item, renderUserItem);
+    });
+}
+
+loadItems = async () => {
+    const items = await Moralis.Cloud.run("getItems");
+    user = await Moralis.User.current();
+    items.forEach(item => {
+        if (user){
+            if (user.attributes.accounts.includes(item.ownerOf)){
+                const userItemListing = document.getElementById(`user-item-${item.tokenObjectId}`);
+                if (userItemListing) userItemListing.parentNode.removeChild(userItemListing);
+                getAndRenderItemData(item, renderUserItem);
+                return;
+            }
+        }
+        getAndRenderItemData(item, renderItem);
+    });
+}
+
+
+initTemplate = (id) => {
+    const template = document.getElementById(id);
+    template.id = "";
+    template.parentNode.removeChild(template);
+    return template;
+}
+
+renderUserItem = async (item) => {
+    const userItem = userItemTemplate.cloneNode(true);
+    if (userItemListing) return;
+
+    const userItem = userItemTemplate.cloneNode(true);
+    userItem.getElementsByTagName("img")[0].src = item.image;
+    userItem.getElementsByTagName("img")[0].alt = item.name;
+    userItem.getElementsByTagName("h5")[0].innerText = item.name;
+    userItem.getElementsByTagName("p")[0].innerText = item.description;
+
+}
+
+getAndRenderItemData = (item, renderFunction) => {
+    
+    fetch(item.tokenUri)
+    .then(response => response.json())
+    .then(data => {
+        item.name = data.name;
+        item.description = data.description;
+        item.image = data.image;
+        renderFunction(item);
+    })
 }
 
 hideElement = (element) => element.style.display = "none";
@@ -181,5 +236,7 @@ const userItems = document.getElementById("userItemsList");
 document.getElementById("btnCloseUserItems").onclick = () => hideElement(userItemsSection);
 const openUserItemsButton = document.getElementById("btnMyItems");
 openUserItemsButton.onclick = openUserItems;
+
+const userItemTemplate = initTemplate("itemTemplate");
 
 init();
