@@ -8,7 +8,7 @@ contract PandoraBoxToken is ERC721 {
     using Counters for Counters.Counter;
     Counters.Counter private _tokenIds;
 
-    constructor () ERC721("PandoraBoxToken", "PBGem"){}
+    constructor () ERC721("PandoraBoxToken", "PBT"){}
     struct Item {
         uint256 id;
         address creator;
