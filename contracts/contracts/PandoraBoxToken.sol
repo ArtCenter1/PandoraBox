@@ -25,6 +25,7 @@ contract PandoraBoxToken is ERC721 {
         Items[newItemId] = Item(newItemId, msg.sender, uri);
 
         return newItemId;
+        // To save gas, add transfer to marketplace on behalf of creator
     }
 
     function tokenURI(uint256 tokenId) public view override returns (string memory) {
