@@ -2,7 +2,7 @@ pragma solidity ^0.8.0;
 
 import "../node_modules/@openzeppelin/contracts/token/ERC721/IERC721.sol";
 
-contract PBoxMarketContract {
+contract PBoxMarketplace {
     struct AuctionItem {
         uint256 id;
         address tokenAddress;
@@ -49,7 +49,9 @@ contract PBoxMarketContract {
         assert(itemsForSale[newItemId].id == newItemId);
         emit itemAdded(newItemId, tokenId, tokenAddress, askingPrice);
         return newItemId;
+        
     }
+    //function removeItemFromMarket();
 
     function buyItem(uint256 id) payable external ItemExists(id) IsForSale(id) HasTransferApproval(itemsForSale[id].tokenAddress,itemsForSale[id].tokenId){
         require(msg.value >= itemsForSale[id].askingPrice, "Not enough funds sent");

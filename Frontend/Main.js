@@ -1,6 +1,7 @@
 Moralis.initialize("yBxYplC8joyNCG5aJ2UbNdIy4m99ihNADphW5Y6O");
 Moralis.serverURL = 'https://zprkibcakpjx.moralis.io:2053/server'
-const TOKEN_CONTRACT_ADDRESS = "0xBA4cf0b9539160413f921933707B03a53a0a7ad2";
+const TOKEN_CONTRACT_ADDRESS = "0x62C1B2340885e8eE75cB3344333cF39A00e8423E";
+const MARKETPLACE_CONTRACT_ADDRESS = "0x55257DEe80C1fA60f51FbAFFb890D7ddfb16bda9";
 
 //enable Moralis web3 service
 init = async () => {
@@ -9,6 +10,7 @@ init = async () => {
     hideElement(createItemForm);
     window.web3 = await Moralis.Web3.enable();
     window.tokenContract = new web3.eth.Contract(tokenContractAbi, TOKEN_CONTRACT_ADDRESS);
+    window.marketplaceContract = new web3.eth.Contract(marketplaceContractAbi, MARKETPLACE_CONTRACT_ADDRESS);
     initUser();
     loadItems();
 }
