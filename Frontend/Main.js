@@ -114,7 +114,7 @@ openUserInfo = async () => {
             hideElement(userAvatarImg);
         }
 
-        showElement(userInfo);
+        $('#userInfo').modal('show');
     }else{
         login();
     }
