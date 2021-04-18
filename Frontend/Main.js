@@ -190,7 +190,7 @@ mintNft = async (metadataUrl) => {
 openUserItems = async () => {
     user = await Moralis.User.current();
     if (user){    
-        showElement(userItemsSection);
+        $('#userItems').modal('show');
     }else{
         login();
     }
