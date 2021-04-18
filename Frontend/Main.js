@@ -13,6 +13,14 @@ init = async () => {
     window.marketplaceContract = new web3.eth.Contract(marketplaceContractAbi, MARKETPLACE_CONTRACT_ADDRESS);
     initUser();
     loadItems();
+
+    const soldItemsQuery = new Moralis.Query('SoldItems');
+    const soldItemsSubscription = await soldItemsQuery.subscribe();
+    soldItemsSubscription.on("create", onItemSold);
+
+    const itemsAddedQuery = new Moralis.Query('ItemsForSale');
+    const itemsAddedSubscription = await itemsAddedQuery.subscribe();
+    itemsAddedSubscription.on("create", onItemAdded);
 }
 
 onItemSold = async (item) => {
