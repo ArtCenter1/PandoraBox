@@ -98,26 +98,26 @@ logout = async () => {
 
 openUserInfo = async () => {
     user = await Moralis.User.current();
-    if (user) {
+    if (user){    
         const email = user.get('email');
-        if (email) {
+        if(email){
             userEmailField.value = email;
-        } else {
+        }else{
             userEmailField.value = "";
         }
 
         userUsernameField.value = user.get('username');
 
         const userAvatar = user.get('avatar');
-        if (userAvatar) {
+        if(userAvatar){
             userAvatarImg.src = userAvatar.url();
             showElement(userAvatarImg);
-        } else {
+        }else{
             hideElement(userAvatarImg);
         }
 
         showElement(userInfo);
-    } else {
+    }else{
         login();
     }
 }
@@ -173,7 +173,7 @@ createItem = async () => {
             return;
         case "1":
             await ensureMarketplaceIsApproved(nftId, TOKEN_CONTRACT_ADDRESS);
-            await marketplaceContract.methods.addItemToMarket(nftId, TOKEN_CONTRACT_ADDRESS, createItemPriceField.value).send({from: userAddress });//maybe need ETH conversion here
+            await marketplaceContract.methods.addItemToMarket(nftId, TOKEN_CONTRACT_ADDRESS, createItemPriceField.value).send({from: userAddress });
             break;
         case "2":
             alert("Not yet supported!");
