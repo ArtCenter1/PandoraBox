@@ -6,8 +6,6 @@ const MARKETPLACE_CONTRACT_ADDRESS = "0x55257DEe80C1fA60f51FbAFFb890D7ddfb16bda9
 //enable Moralis web3 service
 init = async () => {
     hideElement(userItemsSection);
-    hideElement(userInfo);
-    hideElement(createItemForm);
     window.web3 = await Moralis.Web3.enable();
     window.tokenContract = new web3.eth.Contract(tokenContractAbi, TOKEN_CONTRACT_ADDRESS);
     window.marketplaceContract = new web3.eth.Contract(marketplaceContractAbi, MARKETPLACE_CONTRACT_ADDRESS);
