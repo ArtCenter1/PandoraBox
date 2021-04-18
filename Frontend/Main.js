@@ -174,9 +174,10 @@ createItem = async () => {
         case "1":
             await ensureMarketplaceIsApproved(nftId, TOKEN_CONTRACT_ADDRESS);
             await marketplaceContract.methods.addItemToMarket(nftId, TOKEN_CONTRACT_ADDRESS, createItemPriceField.value).send({from: userAddress });
+            // above is where you do the gwei/eth consion
             break;
         case "2":
-            alert("Not yet supported!");
+            alert("Not yet supported!");// future auction feature
             return;
     }
 }
