@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PandoraBox</title>
+    <title>PandoraBox - create and trade crypto collectibles</title>
 </head>
 <body>
     <div>
@@ -49,8 +49,34 @@
         <button id="btnCreateItem">Create!</button>
     </div>
 
+    <div id="userItems">
+        <h4>My Items</h4>
+        <div id="userItemsList"></div>
+        <button id="btnCloseUserItems">Close</button>
+    </div>
+
+    <div id="itemsForSale"></div>
+
+    <div id="itemTemplate">
+        <img src="" alt="">
+        <h5></h5>
+        <p></p>
+        <input type="number" min="1" step="1">
+        <button>Put for sale</button>
+    </div>
+
+    <div id="marketplaceItemTemplate">
+        <img src="" alt="">
+        <h6></h6>
+        <img src="" alt="">
+        <h5></h5>
+        <p></p>
+        <button></button>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
     <script src="https://unpkg.com/moralis/dist/moralis.js"></script>
+    <script src="abi.js"></script>
     <script src="Main.js"></script>
 </body>
 </html>

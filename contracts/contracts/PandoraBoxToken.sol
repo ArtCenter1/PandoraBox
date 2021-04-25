@@ -8,7 +8,7 @@ contract PandoraBoxToken is ERC721 {
     using Counters for Counters.Counter;
     Counters.Counter private _tokenIds;
 
-    constructor () ERC721("PandoraBoxToken", "PBGem"){}
+    constructor () ERC721("PandoraBoxToken", "PBT"){}
     struct Item {
         uint256 id;
         address creator;
@@ -25,6 +25,7 @@ contract PandoraBoxToken is ERC721 {
         Items[newItemId] = Item(newItemId, msg.sender, uri);
 
         return newItemId;
+        // To save gas, add transfer to marketplace on behalf of creator
     }
 
     function tokenURI(uint256 tokenId) public view override returns (string memory) {
