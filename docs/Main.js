@@ -261,8 +261,7 @@ renderItem = (item) => {
     if (item.sellerAvatar){
         itemForSale.getElementsByTagName("img")[0].src = item.sellerAvatar.url();
         itemForSale.getElementsByTagName("img")[0].alt = item.sellerUsername;
-        itemForSale.getElementsByTagName("spain")[0].innerText = item.sellerUsername;
-     
+        
     }
 
     itemForSale.getElementsByTagName("img")[1].src = item.image;
